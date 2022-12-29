@@ -1,0 +1,24 @@
+{
+    "card":[
+        {
+            "img":"./cat.jpeg",
+            "alt":"cat",
+            "attribute":"cat"
+        },
+        {
+            "img":"./cat.jpeg",
+            "alt":"dog",
+            "attribute":"dog"
+        },
+        {
+            "img":"./cat.jpeg",
+            "alt":"fox",
+            "attribute":"fox"
+        },
+        {
+            "img":"./cat.jpeg",
+            "alt":"worm",
+            "attribute":"worm"
+        }
+    ]
+}
