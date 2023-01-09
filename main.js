@@ -117,7 +117,7 @@ class Card  {
             <div class="back"></div>
         `);
         cards.push(element);
-        this.parent.append(element)
+        // this.parent.append(element)
     }
 }
 
@@ -135,63 +135,135 @@ getCard("./db.json") // Получили массив объектов из ка
   data["card"].forEach(obj => { // Проходимся по каждому объекту и вызываем метод startGame
     new Card(".container",obj.img,obj.alt,obj.attribute).createCard();// Предаем в карточки параметры из объектов которые с сервера
   });
+})
+.then(() => { 
+    const cardsArr = [...cards,...cards]
+
+    console.log(cardsArr)
+    shuffle();
+    createCard();
+    start();
+    showCard();
+
+    function createCard () {
+        for(let i = 0; i < cardsArr.length; i++) {
+            document.querySelector(".container").append(cardsArr[i])
+            console.log(cardsArr[i])
+        }
+    }
+    
+    function start() {
+        setTimeout(hiddenCard,5000)
+    };
+    
+    function showCard() {
+        cardsArr.forEach(item => {
+            item.addEventListener("click",(e) =>{
+                item.firstElementChild.classList.remove("hiden");
+                item.lastElementChild.classList.remove("hiden");
+                if(!clickedCard) {
+                    clickedCard = item.dataset.type;
+                    prevClick = item;     
+                }else if(clickedCard === item.dataset.type){
+                    prevClick.classList.add("open");
+                    item.classList.add("open")
+                    clickedCard = "";
+                    cardOpen++
+                }else {
+                    setTimeout(hiddenCard,1000)
+                    clickedCard = "";         
+                } 
+                showModal();
+            });
+        });   
+    };
+    
+    function hiddenCard() {
+        cardsArr.forEach(item => { 
+            if(item.classList.length == 2) {
+                return
+            }else {
+                item.firstElementChild.classList.add("hiden")
+                item.lastElementChild.classList.add("hiden")
+            }   
+        });
+    };
+    
+    function showModal () {
+        if(cardOpen == cardsArr.length/2) {
+            modal.classList.remove("hide") 
+        };
+    };
+    
+    function shuffle() {
+        return cardsArr.sort(() => Math.random() - 0.5);
+    }
+
+    // shuffle();
+    // createCard();
+    // start();
+    // showCard();
 });
 
 
-start();
-showCard();
-
-const bar = document.querySelectorAll(".card")
-console.log(bar)
-
-function showCard() {
-    cards.forEach(item => {
-        console.log(item)
-        item.addEventListener("click",(e) =>{
-            item.firstElementChild.classList.remove("hiden");
-            item.lastElementChild.classList.remove("hiden");
-            if(!clickedCard) {
-                clickedCard = item.dataset.type;
-                prevClick = item;     
-            }else if(clickedCard === item.dataset.type){
-                prevClick.classList.add("open");
-                item.classList.add("open")
-                clickedCard = "";
-                cardOpen++
-            }else {
-                setTimeout(hiddenCard,1000)
-                clickedCard = "";         
-            } 
-            showModal();
-        });
-    });   
-};
-
-function hiddenCard() {
-    cards.forEach(item => { 
-        if(item.classList.length == 2) {
-            return
-        }else {
-            item.firstElementChild.classList.add("hiden")
-            item.lastElementChild.classList.add("hiden")
-        }   
-    });
-};
+// createCard();
+// start();
+// showCard();
 
 
-function start() {
-    setTimeout(hiddenCard,5000)
-};
+// function createCard () {
+//     for(let i = 0; i < cards.length; i++) {
+//         document.querySelector(".container").append(cards[i])
+//     }
+// }
 
-function showModal () {
-    if(cardOpen == cards.length/2) {
-        modal.classList.remove("hide") 
-    };
-};
+// function start() {
+//     setTimeout(hiddenCard,5000)
+// };
 
-function shuffle(cards) {
-    return cards.sort(() => Math.random() - 0.5);
-}
+// function showCard() {
+//     cards.forEach(item => {
+//         console.log(item)
+//         item.addEventListener("click",(e) =>{
+//             item.firstElementChild.classList.remove("hiden");
+//             item.lastElementChild.classList.remove("hiden");
+//             if(!clickedCard) {
+//                 clickedCard = item.dataset.type;
+//                 prevClick = item;     
+//             }else if(clickedCard === item.dataset.type){
+//                 prevClick.classList.add("open");
+//                 item.classList.add("open")
+//                 clickedCard = "";
+//                 cardOpen++
+//             }else {
+//                 setTimeout(hiddenCard,1000)
+//                 clickedCard = "";         
+//             } 
+//             showModal();
+//         });
+//     });   
+// };
+
+// function hiddenCard() {
+//     cards.forEach(item => { 
+//         if(item.classList.length == 2) {
+//             return
+//         }else {
+//             item.firstElementChild.classList.add("hiden")
+//             item.lastElementChild.classList.add("hiden")
+//         }   
+//     });
+// };
+
+// function showModal () {
+//     if(cardOpen == cards.length/2) {
+//         modal.classList.remove("hide") 
+//     };
+// };
+
+// function shuffle() {
+//     return cards.sort(() => Math.random() - 0.5);
+// }
 
 
 
