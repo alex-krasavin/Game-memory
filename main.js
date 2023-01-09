@@ -9,7 +9,6 @@ class Game {
     }
 
     startGame() {
-        let cards = [];
         let prevClick;
         let cardOpen = 0;
         let clickedCard = "";
@@ -77,6 +76,51 @@ class Game {
     };
 };
 
+// const getCard = async(url) => {
+//     const res = await fetch (url);
+//     if(!res.ok) { // Если произошла ошибка при запросе. У фетч есть св-во .ок-все хорошо == 200 и св-во .status
+//       throw new Error (`Could not feth${url}, status: ${res.status}`) //throw использ чтоб вывести ошибку из функции Promise rejected
+//     }
+//     return await res.json();
+// };
+
+// getCard("./db.json") // Получили массив объектов из карточек
+// .then(data => { 
+//     console.log(data)
+//   data["card"].forEach(obj => { // Проходимся по каждому объекту и вызываем метод startGame
+//     new Game(".container",obj.img,obj.alt,obj.attribute).startGame();// Предаем в карточки параметры из объектов которые с сервера
+//   });
+// });
+
+
+const cards = [],
+      modal = document.querySelector(".modal-overlay")
+
+let clickedCard = "";
+let prevClick;
+let cardOpen = 0;
+
+class Card  {
+    constructor(parentSelector,imgUrl,altImg,attribute) {
+        this.parent = document.querySelector(parentSelector);
+        this.imgUrl = imgUrl;
+        this.altImg = altImg;
+        this.attribute = attribute;
+    }
+
+    createCard () {
+        const element = document.createElement("div")
+        element.classList.add("card")
+        element.setAttribute("data-type",this.attribute)
+        element.insertAdjacentHTML("afterbegin", `
+            <div class="front"><img src=${this.imgUrl} alt=${this.altImg}></div>
+            <div class="back"></div>
+        `);
+        cards.push(element);
+        this.parent.append(element)
+    }
+}
+
 const getCard = async(url) => {
     const res = await fetch (url);
     if(!res.ok) { // Если произошла ошибка при запросе. У фетч есть св-во .ок-все хорошо == 200 и св-во .status
@@ -89,73 +133,65 @@ getCard("./db.json") // Получили массив объектов из ка
 .then(data => { 
     console.log(data)
   data["card"].forEach(obj => { // Проходимся по каждому объекту и вызываем метод startGame
-    new Game(".container",obj.img,obj.alt,obj.attribute).startGame();// Предаем в карточки параметры из объектов которые с сервера
+    new Card(".container",obj.img,obj.alt,obj.attribute).createCard();// Предаем в карточки параметры из объектов которые с сервера
   });
 });
 
-// const card = document.querySelectorAll(".card"),
-//       container = document.querySelector(".container"),
-//       modal = document.querySelector(".modal-overlay"),
-//       cardsArray = [];
+
+start();
+showCard();
+
+const bar = document.querySelectorAll(".card")
+console.log(bar)
+
+function showCard() {
+    cards.forEach(item => {
+        console.log(item)
+        item.addEventListener("click",(e) =>{
+            item.firstElementChild.classList.remove("hiden");
+            item.lastElementChild.classList.remove("hiden");
+            if(!clickedCard) {
+                clickedCard = item.dataset.type;
+                prevClick = item;     
+            }else if(clickedCard === item.dataset.type){
+                prevClick.classList.add("open");
+                item.classList.add("open")
+                clickedCard = "";
+                cardOpen++
+            }else {
+                setTimeout(hiddenCard,1000)
+                clickedCard = "";         
+            } 
+            showModal();
+        });
+    });   
+};
+
+function hiddenCard() {
+    cards.forEach(item => { 
+        if(item.classList.length == 2) {
+            return
+        }else {
+            item.firstElementChild.classList.add("hiden")
+            item.lastElementChild.classList.add("hiden")
+        }   
+    });
+};
 
 
-// card.forEach(item => cardsArray.push(item));
+function start() {
+    setTimeout(hiddenCard,5000)
+};
 
-// let clickedCard = "";
-// let prevClick;
-// let cardOpen = 0;
+function showModal () {
+    if(cardOpen == cards.length/2) {
+        modal.classList.remove("hide") 
+    };
+};
 
-// showCard();
-// start(()=>shuffleCards(cardsArray));
-
-// function showCard() {
-//     cardsArray.forEach(item => {
-//         item.addEventListener("click",(e) =>{
-//             item.firstElementChild.classList.remove("hiden");
-//             item.lastElementChild.classList.remove("hiden");
-//             if(!clickedCard) {
-//                 clickedCard = item.dataset.type;
-//                 prevClick = item;     
-//             }else if(clickedCard === item.dataset.type){
-//                 prevClick.classList.add("open");
-//                 item.classList.add("open")
-//                 clickedCard = "";
-//                 cardOpen++
-//             }else {
-//                 setTimeout(hiddenCard,1000)
-//                 clickedCard = "";         
-//             } 
-//             showModal();
-//         });
-//     });   
-// };
-
-// function hiddenCard() {
-//     cardsArray.forEach(item => { 
-//         if(item.classList.length == 2) {
-//             return
-//         }else {
-//             item.firstElementChild.classList.add("hiden")
-//             item.lastElementChild.classList.add("hiden")
-//         }   
-//     });
-// };
-
-
-// function start(fnShuffle) {
-//     fnShuffle();
-//     setTimeout(hiddenCard,5000)
-// };
-
-// function showModal () {
-//     if(cardOpen == cardsArray.length/2) {
-//         modal.classList.remove("hide") 
-//     };
-// };
-
-// function shuffleCards (arr) {
-//     arr.sort(() => Math.random() - 0.5);
-// };
+function shuffle(cards) {
+    return cards.sort(() => Math.random() - 0.5);
+}
 
 
 
