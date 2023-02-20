@@ -11,7 +11,7 @@
 
 .main-title {
     margin-bottom: 40px;
-    font-size: 40px;
+    font-size: 64px;
     text-align: center;
     color:transparent;
     -webkit-background-clip: text;
@@ -19,28 +19,40 @@
     background-image: linear-gradient(to right, red, fuchsia)
 }
 .container {
+    margin: 0 auto;
     padding: 20px;
     display: flex;
-    /* justify-content: space-between; */
-    column-gap: 40px;
+    max-width: 80vw;
+    justify-content: center;
+    column-gap: 20px;
     row-gap: 20px;
 
     flex-wrap: wrap;
-    flex-shrink: 0;
-
-    background-color: rgba(18, 15, 15, 0.534);
+    /* background-color: rgba(18, 15, 15, 0.534); */
 }
 
 .card {
+    flex-shrink: 0;
     position: relative;
-    width: 10%;
-    height:150px;
+    width: 170px;
+    height:170px;
 
     background-color: rgb(226, 88, 88);
     border: 2px solid black;
     border-radius: 20px;
 
+    cursor: pointer;
     overflow: hidden;
+}
+
+.card:hover {
+    transform: scale3d(1.1, 1.1, 1);
+}
+
+.card.open {
+    box-shadow: -4px -5px 15px 2px black;
+    -webkit-box-shadow:-4px -5px 15px 2px black;
+    -moz-box-shadow: -4px -5px 15px 2px black;
 }
 
 .card .front.hiden{
@@ -61,22 +73,22 @@
 
 .front img {
     width: 100%;
-    height:auto;
+    height:100%;
     display: block;
 
     object-fit:cover;
-    font-size: 0;
+    object-position: center;
 }
 
-.front {
+/* .front {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .back {
     transform: rotateY(180deg);
-    background-color: red;
+    background: linear-gradient(39deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
 }
 
 .modal-overlay {
@@ -104,6 +116,7 @@
     height: 50%;
 
     background-color: rgba(253, 22, 22, 0.793);
+    border-radius: 30px;
 }
 
 .modal__title {   
@@ -127,4 +140,8 @@
 
 .hide {
     display: none;
+}
+
+@media (max-width:1375px) {
+    
 }

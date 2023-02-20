@@ -1,24 +1,49 @@
 {
     "card":[
         {
-            "img":"./cat.jpeg",
+            "img":"./img/cat.jpg",
             "alt":"cat",
             "attribute":"cat"
         },
         {
-            "img":"./cat.jpeg",
+            "img":"./img/dog.jpg",
             "alt":"dog",
             "attribute":"dog"
         },
         {
-            "img":"./cat.jpeg",
+            "img":"./img/fox.avif",
             "alt":"fox",
             "attribute":"fox"
         },
         {
-            "img":"./cat.jpeg",
-            "alt":"worm",
-            "attribute":"worm"
+            "img":"./img/racoon.jpg",
+            "alt":"racoon",
+            "attribute":"racoon"
+        },
+        {
+            "img":"./img/tiger.jpg",
+            "alt":"tiger",
+            "attribute":"tiger"
+        },
+        {
+            "img":"./img/bear.jpg",
+            "alt":"bear",
+            "attribute":"bear"
+        },
+        {
+            "img":"./img/panda.jpg",
+            "alt":"panda",
+            "attribute":"panda"
+        },
+        {
+            "img":"./img/lion.jpg",
+            "alt":"lion",
+            "attribute":"lion"
+        },
+        {
+            "img":"./img/squirel.jpg",
+            "alt":"squirel",
+            "attribute":"squirel"
         }
     ]
 }
